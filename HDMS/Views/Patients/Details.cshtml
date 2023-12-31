@@ -1,0 +1,274 @@
+﻿@model HDMS.Models.PatientDashboard
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+
+@functions
+{
+    public string GetAntiXsrfRequestToken()
+    {
+        return Xsrf.GetAndStoreTokens(Context).RequestToken;
+    }
+}
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://kit.fontawesome.com/8e8aa632ff.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+<style>
+.logo {
+  font-size: 300px;
+}
+</style>
+
+<h1>Details</h1>
+
+
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="col-sm-11 text-center" style="background-color: #3498db; padding: 5px; color: #fff; border-radius: 5px; margin-top: 5px;">
+                <i class='fas fa-user-circle'></i>
+                <h4>Patient</h4>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.Name)
+                    </dt>
+                    <dd class="col-sm-6">
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+                    <dt class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.Surname)
+                    </dt>
+                    <dd class="col-sm-6">
+                        @Html.DisplayFor(model => model.Surname)
+                    </dd>
+                    <dt class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.BirthDate)
+                    </dt>
+                    <dd class="col-sm-6" id="BD">
+                        @Model.BirthDate.ToString("MM/dd/yyyy")
+                    </dd>
+                    <dt class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.Sex)
+                    </dt>
+                    <dd class="col-sm-6">
+                        @Html.DisplayFor(model => model.Sex)
+                    </dd>
+                    <dt class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.Diagnosis)
+                    </dt>
+                    <dd class="col-sm-6">
+                        @Html.DisplayFor(model => model.Diagnosis)
+                    </dd>
+                </dl>
+            </div>        
+            <div class="col-sm-11 form-group">
+                <label asp-for="LatestDate" class="control-label"></label>
+                <input asp-for="LatestDate" max="2023-09-09" min="2023-01-09" class="form-control" oninput="ChangeData(this.value)" />
+                <span asp-validation-for="LatestDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="col-sm-12 text-center" style="background-color: #3498db; padding: 5px; color: #fff; border-radius: 5px; margin-top: 5px;">
+                <i class='fas fa-heartbeat'></i>
+                <h4>Heart Rate</h4>
+                <p id="HRvalue">@Html.DisplayFor(model => model.HeartRateLatest)</p>
+            </div>
+        <div class="col-sm-12 text-center" style="height: 280px">
+                <canvas id="HRChart" ></canvas>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="col-sm-12 text-center" style="background-color: #3498db; padding: 5px; color: #fff; border-radius: 5px; margin-top: 5px;">
+                <i class='fas fa-route'></i>
+                <h4>Steps</h4>
+            <p id="steps">@Html.DisplayFor(model => model.StepsLatest)</p>
+            </div>
+        <div class="col-sm-12 text-center" style="height: 280px">
+                <canvas id="StepsChart"></canvas>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="col-sm-12 text-center" style="background-color: #3498db; padding: 5px; color: #fff; border-radius: 5px; margin-top: 5px;">
+                <i class='fas fa-tint'></i>
+                <h4>Blood Pressure</h4>
+            <p id="BP">@Html.DisplayFor(model => model.BPdyastolicLatest)/@Html.DisplayFor(model => model.BPsystolicLatest)</p>
+            </div>
+        <div class="col-sm-12 text-center" style="height: 280px">
+                <canvas id="BPChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+    let ctx = document.getElementById("HRChart").getContext("2d");
+    let HRchart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: [
+                "@Model.Dates[0].ToString("MM/dd/yyyy")",
+                "@Model.Dates[1].ToString("MM/dd/yyyy")",
+                "@Model.Dates[2].ToString("MM/dd/yyyy")",
+                "@Model.Dates[3].ToString("MM/dd/yyyy")",
+                "@Model.Dates[4].ToString("MM/dd/yyyy")",
+                "@Model.Dates[5].ToString("MM/dd/yyyy")",
+                "@Model.Dates[6].ToString("MM/dd/yyyy")",
+            ],
+            datasets: [
+                {
+                    label: "HR",
+                    data: [
+                        @Model.HeartRateTrend[0],
+                        @Model.HeartRateTrend[1],
+                        @Model.HeartRateTrend[2],
+                        @Model.HeartRateTrend[3],
+                        @Model.HeartRateTrend[4],
+                        @Model.HeartRateTrend[5],
+                        @Model.HeartRateTrend[6],
+                    ],
+                    backgroundColor: "rgba(52,152,219)",
+                },
+            ],
+        },
+        options: {
+        maintainAspectRatio: false,
+        }
+    });
+
+    let Stepsctx = document.getElementById("StepsChart").getContext("2d");
+    let StepsChart = new Chart(Stepsctx, {
+        type: "line",
+        data: {
+            labels: [
+                "@Model.Dates[0].ToString("MM/dd/yyyy")",
+                "@Model.Dates[1].ToString("MM/dd/yyyy")",
+                "@Model.Dates[2].ToString("MM/dd/yyyy")",
+                "@Model.Dates[3].ToString("MM/dd/yyyy")",
+                "@Model.Dates[4].ToString("MM/dd/yyyy")",
+                "@Model.Dates[5].ToString("MM/dd/yyyy")",
+                "@Model.Dates[6].ToString("MM/dd/yyyy")",
+            ],
+            datasets: [
+                {
+                    label: "Steps",
+                    data: [
+                        @Model.StepsTrend[0],
+                        @Model.StepsTrend[1],
+                        @Model.StepsTrend[2],
+                        @Model.StepsTrend[3],
+                        @Model.StepsTrend[4],
+                        @Model.StepsTrend[5],
+                        @Model.StepsTrend[6],
+                    ],
+                    backgroundColor: "rgba(52,152,219)",
+                },
+            ],
+        },
+        options: {
+            maintainAspectRatio: false,
+        }
+    });
+
+    let BPctx = document.getElementById("BPChart").getContext("2d");
+    let BPChart = new Chart(BPctx, {
+        type: "line",
+        data: {
+            labels: [
+                "@Model.Dates[0].ToString("MM/dd/yyyy")",
+                "@Model.Dates[1].ToString("MM/dd/yyyy")",
+                "@Model.Dates[2].ToString("MM/dd/yyyy")",
+                "@Model.Dates[3].ToString("MM/dd/yyyy")",
+                "@Model.Dates[4].ToString("MM/dd/yyyy")",
+                "@Model.Dates[5].ToString("MM/dd/yyyy")",
+                "@Model.Dates[6].ToString("MM/dd/yyyy")",
+            ],
+            datasets: [
+                {
+                    label: "Dyastolic",
+                    data: [
+                        @Model.BPdyastolicTrend[0],
+                        @Model.BPdyastolicTrend[1],
+                        @Model.BPdyastolicTrend[2],
+                        @Model.BPdyastolicTrend[3],
+                        @Model.BPdyastolicTrend[4],
+                        @Model.BPdyastolicTrend[5],
+                        @Model.BPdyastolicTrend[6],
+                    ],
+                    backgroundColor: "rgba(22,83,126)",
+                },
+                {
+                    label: "Systolic",
+                    data: [
+                        @Model.BPsystolicTrend[0],
+                        @Model.BPsystolicTrend[1],
+                        @Model.BPsystolicTrend[2],
+                        @Model.BPsystolicTrend[3],
+                        @Model.BPsystolicTrend[4],
+                        @Model.BPsystolicTrend[5],
+                        @Model.BPsystolicTrend[6],
+                    ],
+                    backgroundColor: "rgba(52,152,219)",
+                },
+            ],
+        },
+        options: {
+            maintainAspectRatio: false,
+        }
+    });
+
+    function ChangeData(value) {
+
+        let data = {
+            Date: value,
+            PatientId: @Model.PatientId,
+
+        };
+        
+        fetch("/Patients/GetNewData", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'X-ANTI-FORGERY-TOKEN': '@GetAntiXsrfRequestToken()',            
+            },
+            body: JSON.stringify(data)
+        }).then(res => res.json())
+            .then(res => {
+                //console.log(res);
+                document.getElementById("steps").innerHTML = res["steps"];
+                document.getElementById("HRvalue").innerHTML = res["HR"];
+                document.getElementById("BP").innerHTML = String(res["BPd"]) + " /" + String(res["BPs"]);
+                
+                HRchart.chart.data.datasets[0].data = res["HRtrend"]
+                HRchart.chart.data.labels = res["dates"]
+                HRchart.chart.update();
+
+                StepsChart.chart.data.datasets[0].data = res["Strend"]
+                StepsChart.chart.data.labels = res["dates"]
+                StepsChart.chart.update();
+
+                BPChart.chart.data.datasets[0].data = res["BPDtrend"]
+                BPChart.chart.data.datasets[1].data = res["BPStrend"]
+                BPChart.chart.data.labels = res["dates"]
+                BPChart.chart.update();
+
+                console.log(res["Strend"]);
+                console.log(res["dates"]);
+                console.log(StepsChart.chart.data.datasets[0].data);
+
+            });
+
+    }
+
+
+</script>
+
+<!--
+-->
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

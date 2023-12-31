@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HDMS", "HDMS\HDMS.csproj", "{BEE999E2-C300-4C0F-870D-9BB8EF4E901B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDMStest", "HDMStest\HDMStest.csproj", "{DA7350B2-3BEA-4164-BFD4-6651143244B5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BEE999E2-C300-4C0F-870D-9BB8EF4E901B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEE999E2-C300-4C0F-870D-9BB8EF4E901B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEE999E2-C300-4C0F-870D-9BB8EF4E901B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEE999E2-C300-4C0F-870D-9BB8EF4E901B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA7350B2-3BEA-4164-BFD4-6651143244B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA7350B2-3BEA-4164-BFD4-6651143244B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA7350B2-3BEA-4164-BFD4-6651143244B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA7350B2-3BEA-4164-BFD4-6651143244B5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D54D1680-54CF-49B9-8E41-2275B67F1C01}
+	EndGlobalSection
+EndGlobal
