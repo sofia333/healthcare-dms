@@ -120,121 +120,122 @@
 
 
 <script>
-    // build HR chart
-    let ctx = document.getElementById("HRChart").getContext("2d");
-    let HRchart = new Chart(ctx, {
-        type: "line",
-        data: {
-            labels: [
-                "@Model.Dates[0].ToString("MM/dd/yyyy")",
-                "@Model.Dates[1].ToString("MM/dd/yyyy")",
-                "@Model.Dates[2].ToString("MM/dd/yyyy")",
-                "@Model.Dates[3].ToString("MM/dd/yyyy")",
-                "@Model.Dates[4].ToString("MM/dd/yyyy")",
-                "@Model.Dates[5].ToString("MM/dd/yyyy")",
-                "@Model.Dates[6].ToString("MM/dd/yyyy")",
-            ],
-            datasets: [
-                {
-                    label: "HR",
-                    data: [
-                        @Model.HeartRateTrend[0],
-                        @Model.HeartRateTrend[1],
-                        @Model.HeartRateTrend[2],
-                        @Model.HeartRateTrend[3],
-                        @Model.HeartRateTrend[4],
-                        @Model.HeartRateTrend[5],
-                        @Model.HeartRateTrend[6],
-                    ],
-                    backgroundColor: "rgba(52,152,219)",
-                },
-            ],
-        },
-        options: {
-        maintainAspectRatio: false,
-        }
-    });
-    // build steps chart
-    let Stepsctx = document.getElementById("StepsChart").getContext("2d");
-    let StepsChart = new Chart(Stepsctx, {
-        type: "line",
-        data: {
-            labels: [
-                "@Model.Dates[0].ToString("MM/dd/yyyy")",
-                "@Model.Dates[1].ToString("MM/dd/yyyy")",
-                "@Model.Dates[2].ToString("MM/dd/yyyy")",
-                "@Model.Dates[3].ToString("MM/dd/yyyy")",
-                "@Model.Dates[4].ToString("MM/dd/yyyy")",
-                "@Model.Dates[5].ToString("MM/dd/yyyy")",
-                "@Model.Dates[6].ToString("MM/dd/yyyy")",
-            ],
-            datasets: [
-                {
-                    label: "Steps",
-                    data: [
-                        @Model.StepsTrend[0],
-                        @Model.StepsTrend[1],
-                        @Model.StepsTrend[2],
-                        @Model.StepsTrend[3],
-                        @Model.StepsTrend[4],
-                        @Model.StepsTrend[5],
-                        @Model.StepsTrend[6],
-                    ],
-                    backgroundColor: "rgba(52,152,219)",
-                },
-            ],
-        },
-        options: {
-            maintainAspectRatio: false,
-        }
-    });
-    //build BP chart
-    let BPctx = document.getElementById("BPChart").getContext("2d");
-    let BPChart = new Chart(BPctx, {
-        type: "line",
-        data: {
-            labels: [
-                "@Model.Dates[0].ToString("MM/dd/yyyy")",
-                "@Model.Dates[1].ToString("MM/dd/yyyy")",
-                "@Model.Dates[2].ToString("MM/dd/yyyy")",
-                "@Model.Dates[3].ToString("MM/dd/yyyy")",
-                "@Model.Dates[4].ToString("MM/dd/yyyy")",
-                "@Model.Dates[5].ToString("MM/dd/yyyy")",
-                "@Model.Dates[6].ToString("MM/dd/yyyy")",
-            ],
-            datasets: [
-                {
-                    label: "Dyastolic",
-                    data: [
-                        @Model.BPdyastolicTrend[0],
-                        @Model.BPdyastolicTrend[1],
-                        @Model.BPdyastolicTrend[2],
-                        @Model.BPdyastolicTrend[3],
-                        @Model.BPdyastolicTrend[4],
-                        @Model.BPdyastolicTrend[5],
-                        @Model.BPdyastolicTrend[6],
-                    ],
-                    backgroundColor: "rgba(22,83,126)",
-                },
-                {
-                    label: "Systolic",
-                    data: [
-                        @Model.BPsystolicTrend[0],
-                        @Model.BPsystolicTrend[1],
-                        @Model.BPsystolicTrend[2],
-                        @Model.BPsystolicTrend[3],
-                        @Model.BPsystolicTrend[4],
-                        @Model.BPsystolicTrend[5],
-                        @Model.BPsystolicTrend[6],
-                    ],
-                    backgroundColor: "rgba(52,152,219)",
-                },
-            ],
-        },
-        options: {
-            maintainAspectRatio: false,
-        }
-    });
+    
+        // build HR chart
+        let ctx = document.getElementById("HRChart").getContext("2d");
+        let HRchart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: [
+                    "@Model.Dates[0].ToString("MM/dd/yyyy")",
+                    "@Model.Dates[1].ToString("MM/dd/yyyy")",
+                    "@Model.Dates[2].ToString("MM/dd/yyyy")",
+                    "@Model.Dates[3].ToString("MM/dd/yyyy")",
+                    "@Model.Dates[4].ToString("MM/dd/yyyy")",
+                    "@Model.Dates[5].ToString("MM/dd/yyyy")",
+                    "@Model.Dates[6].ToString("MM/dd/yyyy")",
+                ],
+                datasets: [
+                    {
+                        label: "HR",
+                        data: [
+                            @Model.HeartRateTrend[0],
+                            @Model.HeartRateTrend[1],
+                            @Model.HeartRateTrend[2],
+                            @Model.HeartRateTrend[3],
+                            @Model.HeartRateTrend[4],
+                            @Model.HeartRateTrend[5],
+                            @Model.HeartRateTrend[6],
+                        ],
+                        backgroundColor: "rgba(52,152,219)",
+                    },
+                ],
+            },
+            options: {
+                maintainAspectRatio: false,
+            }
+        });
+        // build steps chart
+        let Stepsctx = document.getElementById("StepsChart").getContext("2d");
+        let StepsChart = new Chart(Stepsctx, {
+            type: "line",
+            data: {
+                labels: [
+                    "@Model.Dates[0].ToString("MM/dd/yyyy")",
+                    "@Model.Dates[1].ToString("MM/dd/yyyy")",
+                    "@Model.Dates[2].ToString("MM/dd/yyyy")",
+                    "@Model.Dates[3].ToString("MM/dd/yyyy")",
+                    "@Model.Dates[4].ToString("MM/dd/yyyy")",
+                    "@Model.Dates[5].ToString("MM/dd/yyyy")",
+                    "@Model.Dates[6].ToString("MM/dd/yyyy")",
+                ],
+                datasets: [
+                    {
+                        label: "Steps",
+                        data: [
+                            @Model.StepsTrend[0],
+                            @Model.StepsTrend[1],
+                            @Model.StepsTrend[2],
+                            @Model.StepsTrend[3],
+                            @Model.StepsTrend[4],
+                            @Model.StepsTrend[5],
+                            @Model.StepsTrend[6],
+                        ],
+                        backgroundColor: "rgba(52,152,219)",
+                    },
+                ],
+            },
+            options: {
+                maintainAspectRatio: false,
+            }
+        });
+        //build BP chart
+        let BPctx = document.getElementById("BPChart").getContext("2d");
+        let BPChart = new Chart(BPctx, {
+            type: "line",
+            data: {
+                labels: [
+                    "@Model.Dates[0].ToString("MM/dd/yyyy")",
+                    "@Model.Dates[1].ToString("MM/dd/yyyy")",
+                    "@Model.Dates[2].ToString("MM/dd/yyyy")",
+                    "@Model.Dates[3].ToString("MM/dd/yyyy")",
+                    "@Model.Dates[4].ToString("MM/dd/yyyy")",
+                    "@Model.Dates[5].ToString("MM/dd/yyyy")",
+                    "@Model.Dates[6].ToString("MM/dd/yyyy")",
+                ],
+                datasets: [
+                    {
+                        label: "Dyastolic",
+                        data: [
+                            @Model.BPdyastolicTrend[0],
+                            @Model.BPdyastolicTrend[1],
+                            @Model.BPdyastolicTrend[2],
+                            @Model.BPdyastolicTrend[3],
+                            @Model.BPdyastolicTrend[4],
+                            @Model.BPdyastolicTrend[5],
+                            @Model.BPdyastolicTrend[6],
+                        ],
+                        backgroundColor: "rgba(22,83,126)",
+                    },
+                    {
+                        label: "Systolic",
+                        data: [
+                            @Model.BPsystolicTrend[0],
+                            @Model.BPsystolicTrend[1],
+                            @Model.BPsystolicTrend[2],
+                            @Model.BPsystolicTrend[3],
+                            @Model.BPsystolicTrend[4],
+                            @Model.BPsystolicTrend[5],
+                            @Model.BPsystolicTrend[6],
+                        ],
+                        backgroundColor: "rgba(52,152,219)",
+                    },
+                ],
+            },
+            options: {
+                maintainAspectRatio: false,
+            }
+        });
     // On the date selection action, get the respective heart rate, steps, blood pressure values and trends by sending a POST /Patients/GetNewData
     // and update the charts
     function ChangeData(value) {

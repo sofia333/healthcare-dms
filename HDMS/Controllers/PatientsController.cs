@@ -44,6 +44,10 @@ namespace HDMS.Controllers
             // get patient personal details
             var patient = await _context.Patient
                 .FirstOrDefaultAsync(m => m.Id == id);
+            if (patient == null)
+            {
+                return NotFound();
+            }
             // get patient data of the first available week
             var patientData = _context.PatientData
                 .Where(b => b.PatientId == id)
@@ -59,6 +63,11 @@ namespace HDMS.Controllers
                 .Take(7);
             // store patient personal details and data in a PatientDashboard object
             PatientDashboard patientDashboard = new PatientDashboard();
+            if (_context.PatientData.FirstOrDefault(m => m.PatientId == id) == null)
+            {
+                return RedirectToAction(nameof(Index));
+                
+            }
             patientDashboard.HeartRateTrend = patientData.Select(a => a.heartRate).ToList();
             patientDashboard.StepsTrend = patientData.Select(a => a.steps).ToList();
             patientDashboard.BPdyastolicTrend = patientData.Select(a => a.bpDyastolic).ToList();
@@ -68,18 +77,14 @@ namespace HDMS.Controllers
             patientDashboard.BPdyastolicLatest = patientData.Select(a => a.bpDyastolic).LastOrDefault();
             patientDashboard.BPsystolicLatest = patientData.Select(a => a.bpSystolic).LastOrDefault();
             patientDashboard.Dates = patientData.Select(a => a.date).ToList();
+            patientDashboard.LatestDate = patientData.Select(a => a.date).LastOrDefault();
             patientDashboard.Name = patient.Name;
             patientDashboard.Surname = patient.Surname;
             patientDashboard.BirthDate = patient.BirthDate;
             patientDashboard.Sex = patient.Sex;
             patientDashboard.Diagnosis = patient.Diagnosis;
-            patientDashboard.LatestDate = patientData.Select(a => a.date).LastOrDefault();
             patientDashboard.PatientId = patient.Id;
 
-            if (patient == null)
-            {
-                return NotFound();
-            }
             // send object and return the view
             return View(patientDashboard);
         }
