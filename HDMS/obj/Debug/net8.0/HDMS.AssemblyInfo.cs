@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HDMS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+575c380874b4c02f3b2ec6b4ae67157377c4470b")]
 [assembly: System.Reflection.AssemblyProductAttribute("HDMS")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HDMS")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

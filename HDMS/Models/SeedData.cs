@@ -9,10 +9,11 @@ namespace HDMS.Models;
 
 public static class SeedData
 {
+    //Gives you a number between min and max
     public static int GetRandomNumber(int min, int max)
     {
         Random rnd = new Random();
-        int result = rnd.Next(min, max); //Gives you a number between min and max
+        int result = rnd.Next(min, max); 
         return result;
     }
     public static void Initialize(IServiceProvider serviceProvider)
@@ -25,8 +26,8 @@ public static class SeedData
             {
                 throw new ArgumentNullException("Null RazorPagesMovieContext");
             }
-
-            // Look for any patients.
+            // seed the Patient Table
+            // If there are no patients, create the following 4
             if (context.Patient.Any() == false)
             {
 
@@ -79,6 +80,8 @@ public static class SeedData
                 return;   // DB has been seeded
             }
 
+            // seed the PatientData Table
+            // create a record for each patient, for each date comprised between startData and endDate
             DateTime startDate = DateTime.Parse("2023-1-9");
             DateTime endDate = DateTime.Parse("2023-9-9");
             for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))

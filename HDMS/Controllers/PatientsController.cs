@@ -25,22 +25,26 @@ namespace HDMS.Controllers
         }
 
         // GET: Patients
+        // get the list of all the patients
+        // return the view Views/Home/Patients/Index
         public async Task<IActionResult> Index()
         {
             return View(await _context.Patient.ToListAsync());
         }
 
         // GET: Patients/Details/5
+        // get the patient's dashboard data
+        // return the view Views/Home/Patients/Details 
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
+            // get patient personal details
             var patient = await _context.Patient
                 .FirstOrDefaultAsync(m => m.Id == id);
-
+            // get patient data of the first available week
             var patientData = _context.PatientData
                 .Where(b => b.PatientId == id)
                 .OrderBy(b => b.Date)
@@ -53,7 +57,7 @@ namespace HDMS.Controllers
                     date = b.Date
                 })
                 .Take(7);
-
+            // store patient personal details and data in a PatientDashboard object
             PatientDashboard patientDashboard = new PatientDashboard();
             patientDashboard.HeartRateTrend = patientData.Select(a => a.heartRate).ToList();
             patientDashboard.StepsTrend = patientData.Select(a => a.steps).ToList();
@@ -76,19 +80,20 @@ namespace HDMS.Controllers
             {
                 return NotFound();
             }
-
+            // send object and return the view
             return View(patientDashboard);
         }
 
         // GET: Patients/Create
+        // return the view Views/Home/Patients/Create
         public IActionResult Create()
         {
             return View();
         }
 
         // POST: Patients/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Create a new patient 
+        // return the view Views/Home/Patients/Index
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Surname,BirthDate,BSN,Sex,Diagnosis")] Patient patient)
@@ -103,6 +108,7 @@ namespace HDMS.Controllers
         }
 
         // GET: Patients/Edit/5
+        // return the view Views/Home/Patients/Edit
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -119,8 +125,8 @@ namespace HDMS.Controllers
         }
 
         // POST: Patients/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Edit patient's personal data
+        // return the view Views/Home/Patients/Index
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Surname,BirthDate,BSN,Sex,Diagnosis")] Patient patient)
@@ -153,6 +159,9 @@ namespace HDMS.Controllers
             return View(patient);
         }
 
+        // POST: Patients/GetNewData
+        // get the patient's dashboard data of the selected date
+        // return json  
         [HttpPost]
         [ValidateAntiForgeryToken]
         public string GetNewData([FromBody] Dataex dataex)
@@ -180,6 +189,7 @@ namespace HDMS.Controllers
             return json;
         }
         // GET: Patients/Delete/5
+        // return the view Views/Home/Patients/Delete 
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -198,6 +208,8 @@ namespace HDMS.Controllers
         }
 
         // POST: Patients/Delete/5
+        // delete patient
+        // return the view Views/Home/Patients/Index
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

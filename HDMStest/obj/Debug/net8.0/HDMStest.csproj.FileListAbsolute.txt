@@ -354,3 +354,6 @@ C:\Users\Sofia\source\repos\HDMS\HDMStest\obj\Debug\net8.0\refint\HDMStest.dll
 C:\Users\Sofia\source\repos\HDMS\HDMStest\obj\Debug\net8.0\HDMStest.pdb
 C:\Users\Sofia\source\repos\HDMS\HDMStest\obj\Debug\net8.0\HDMStest.genruntimeconfig.cache
 C:\Users\Sofia\source\repos\HDMS\HDMStest\obj\Debug\net8.0\ref\HDMStest.dll
+C:\Users\Sofia\source\repos\HDMS\HDMStest\bin\Debug\net8.0\Castle.Core.dll
+C:\Users\Sofia\source\repos\HDMS\HDMStest\bin\Debug\net8.0\Moq.dll
+C:\Users\Sofia\source\repos\HDMS\HDMStest\obj\Debug\net8.0\HDMStest.sourcelink.json

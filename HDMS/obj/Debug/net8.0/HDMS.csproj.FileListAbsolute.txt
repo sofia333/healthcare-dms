@@ -281,3 +281,6 @@ C:\Users\Sofia\source\repos\HDMS\HDMS\bin\Debug\net8.0\runtimes\win-arm\native\e
 C:\Users\Sofia\source\repos\HDMS\HDMS\bin\Debug\net8.0\runtimes\win-arm64\native\e_sqlite3.dll
 C:\Users\Sofia\source\repos\HDMS\HDMS\bin\Debug\net8.0\runtimes\win-x64\native\e_sqlite3.dll
 C:\Users\Sofia\source\repos\HDMS\HDMS\bin\Debug\net8.0\runtimes\win-x86\native\e_sqlite3.dll
+C:\Users\Sofia\source\repos\HDMS\HDMS\obj\Debug\net8.0\HDMS.sourcelink.json
+C:\Users\Sofia\source\repos\HDMS\HDMS\bin\Debug\net8.0\Castle.Core.dll
+C:\Users\Sofia\source\repos\HDMS\HDMS\bin\Debug\net8.0\Moq.dll

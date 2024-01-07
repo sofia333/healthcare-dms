@@ -1,5 +1,11 @@
 ﻿@model HDMS.Models.PatientDashboard
-
+<!--
+    Patient's Dashboard showing
+    - patient's details
+    - heart rate, steps and blood pressure latest values
+    - heart rate, steps and blood pressure weekly trend (from 6 days prior the selected date to the selected date)
+    - option to change date to see the correspondent values and trends
+-->
 @{
     ViewData["Title"] = "Details";
 }
@@ -8,6 +14,7 @@
 
 @functions
 {
+    // get antiforgery token
     public string GetAntiXsrfRequestToken()
     {
         return Xsrf.GetAndStoreTokens(Context).RequestToken;
@@ -24,6 +31,8 @@
 }
 </style>
 
+
+
 <h1>Details</h1>
 
 
@@ -31,6 +40,7 @@
         <div class="col-sm-3">
             <div class="col-sm-11 text-center" style="background-color: #3498db; padding: 5px; color: #fff; border-radius: 5px; margin-top: 5px;">
                 <i class='fas fa-user-circle'></i>
+                <!-- Patient's details block -->
                 <h4>Patient</h4>
                 <hr />
                 <dl class="row">
@@ -65,13 +75,15 @@
                         @Html.DisplayFor(model => model.Diagnosis)
                     </dd>
                 </dl>
-            </div>        
+            </div>
+        <!-- Select date -->
             <div class="col-sm-11 form-group">
                 <label asp-for="LatestDate" class="control-label"></label>
                 <input asp-for="LatestDate" max="2023-09-09" min="2023-01-09" class="form-control" oninput="ChangeData(this.value)" />
                 <span asp-validation-for="LatestDate" class="text-danger"></span>
             </div>
         </div>
+    <!-- Heart rate block -->
         <div class="col-sm-3">
             <div class="col-sm-12 text-center" style="background-color: #3498db; padding: 5px; color: #fff; border-radius: 5px; margin-top: 5px;">
                 <i class='fas fa-heartbeat'></i>
@@ -82,6 +94,7 @@
                 <canvas id="HRChart" ></canvas>
             </div>
         </div>
+    <!-- Steps block -->
         <div class="col-sm-3">
             <div class="col-sm-12 text-center" style="background-color: #3498db; padding: 5px; color: #fff; border-radius: 5px; margin-top: 5px;">
                 <i class='fas fa-route'></i>
@@ -92,6 +105,7 @@
                 <canvas id="StepsChart"></canvas>
             </div>
         </div>
+    <!-- Blood pressure block -->
         <div class="col-sm-3">
             <div class="col-sm-12 text-center" style="background-color: #3498db; padding: 5px; color: #fff; border-radius: 5px; margin-top: 5px;">
                 <i class='fas fa-tint'></i>
@@ -106,6 +120,7 @@
 
 
 <script>
+    // build HR chart
     let ctx = document.getElementById("HRChart").getContext("2d");
     let HRchart = new Chart(ctx, {
         type: "line",
@@ -139,7 +154,7 @@
         maintainAspectRatio: false,
         }
     });
-
+    // build steps chart
     let Stepsctx = document.getElementById("StepsChart").getContext("2d");
     let StepsChart = new Chart(Stepsctx, {
         type: "line",
@@ -173,7 +188,7 @@
             maintainAspectRatio: false,
         }
     });
-
+    //build BP chart
     let BPctx = document.getElementById("BPChart").getContext("2d");
     let BPChart = new Chart(BPctx, {
         type: "line",
@@ -220,15 +235,16 @@
             maintainAspectRatio: false,
         }
     });
-
+    // On the date selection action, get the respective heart rate, steps, blood pressure values and trends by sending a POST /Patients/GetNewData
+    // and update the charts
     function ChangeData(value) {
-
+        // selected date and patient's id
         let data = {
             Date: value,
             PatientId: @Model.PatientId,
 
         };
-        
+        // send date in POST /Patients/GetNewData
         fetch("/Patients/GetNewData", {
             method: "POST",
             headers: {
@@ -238,7 +254,7 @@
             body: JSON.stringify(data)
         }).then(res => res.json())
             .then(res => {
-                //console.log(res);
+                // update the charts
                 document.getElementById("steps").innerHTML = res["steps"];
                 document.getElementById("HRvalue").innerHTML = res["HR"];
                 document.getElementById("BP").innerHTML = String(res["BPd"]) + " /" + String(res["BPs"]);
@@ -258,7 +274,6 @@
 
                 console.log(res["Strend"]);
                 console.log(res["dates"]);
-                console.log(StepsChart.chart.data.datasets[0].data);
 
             });
 
