@@ -14,7 +14,7 @@ A dashboard will appear with:
 - number of steps (daily average value above and weekly trend below)
 - blood pressure, systolic/dyastolic (daily average value above and weekly trend below)
 - select date: option to select the date in which it is possible to visualize the respective health data (average value of the date and trend of the week starting  days earlier).
-The weekly trends are shown in charts that update dynamically when the selction date change
+The weekly trends are shown in charts that update dynamically when the selection date changes
 
 # Database
 - SQL server
